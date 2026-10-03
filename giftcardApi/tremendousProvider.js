@@ -1,5 +1,5 @@
 class TremendousProvider {
-	#TODO: Implement .env to hide keys
+	//TODO: Implement .env to hide keys
 	constructor() {
 		//testflight url
 		this.baseUrl = "https://testflight.tremendous.com/api/v2"
@@ -31,7 +31,7 @@ class TremendousProvider {
 	async purchase({ productId, amountCents, currency = "USD",
 					 recipientEmail, recipientName, externalRefId }) {
 		const payload = {
-			external_id = externalRefId,
+			external_id: externalRefId,
 			payment: {
 				funding_source_id: "balance" //TODO use real money
 			},
@@ -64,7 +64,7 @@ class TremendousProvider {
 			//TODO enums?
 			status: order.status === "EXECUTED" ? "SUCCESS" : "PENDING",
 			rewardUrl: reward?.delivery?.link || null,
-			response = data,
+			response: data,
 		};
 	}
 

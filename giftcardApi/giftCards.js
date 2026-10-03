@@ -12,7 +12,7 @@ async function buyGiftCard({ userId, productId, amountCents,
 
 	try {
 		const result = await provider.purchase({
-			productId
+			productId,
 			amountCents,
 			currency: "USD",
 			recipientEmail,
@@ -29,7 +29,7 @@ async function buyGiftCard({ userId, productId, amountCents,
 		console.error(`Failed to complete gift card purchase:`, err.message);
 		return {
 			success: false,
-			error: error.message
+			error: err.message
 		};
 	}
 }
