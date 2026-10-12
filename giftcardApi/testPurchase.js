@@ -1,9 +1,12 @@
-const buyGiftCard = require("./giftCards.js")
+import {buyGiftCard, checkProducts} from "./giftCards.js";
 
-async function test() {
+const productId = "SUCNT639A6H9";
+let card = await checkProducts(productId);
+
+async function testPurchase() {
 	const response = await buyGiftCard({
 		userId: "1",
-		cardProductId: "OKM29281D608",
+		productId: productId,
 		amountCents: 2500,
 		recipientEmail: "rchoud29@asu.edu",
 		recipientName: "test",
@@ -12,4 +15,4 @@ async function test() {
 	console.log(response);
 }
 
-test();
+testPurchase();

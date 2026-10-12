@@ -74,4 +74,4 @@ class TremendousProvider {
 	}
 }
 
-module.exports = TremendousProvider;
+export default TremendousProvider

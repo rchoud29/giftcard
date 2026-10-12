@@ -2,7 +2,7 @@
  * Internal API layer to purchase giftcards
  */
 
-const TremendousProvider = require("./tremendousProvider.js");
+import TremendousProvider from "./tremendousProvider.js";
 
 const provider = new TremendousProvider();
 
@@ -34,4 +34,23 @@ async function buyGiftCard({ userId, productId, amountCents,
 	}
 }
 
-module.exports = buyGiftCard
+async function checkProducts(productId=Null) {
+	const products = await provider.getProducts();
+
+	const formatted = products.map((p) => ({
+		id: p.id,
+		name: p.name,
+		currency: p.currency_codes ? 
+				  p.currency_codes.join(", ") : Null,
+		skus: p.skus?.map((sku) => ({
+			min: sku.min,
+			max: sku.max,
+		})),
+	}));
+	return (productId) ? formatted.filter((p) => p.id == productId) : formatted
+}
+
+export {
+	buyGiftCard,
+	checkProducts,
+};
