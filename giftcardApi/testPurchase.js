@@ -23,5 +23,5 @@ async function testSearch() {
 	console.log(response);
 }
 
-await testPurchase();
 await testSearch();
+await testPurchase();

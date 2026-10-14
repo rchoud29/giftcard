@@ -68,6 +68,7 @@ async function checkProducts(options = {}) {
 		currency = null,
 		forceRefresh = false,
 		cacheTtl = DEFAULT_CACHE_TTL,
+		limit = 25,
 	} = options;
 
 	const rawProducts = await getCachedCatalog(cacheTtl, forceRefresh);
@@ -116,7 +117,7 @@ async function checkProducts(options = {}) {
         }
 
 		return true
-	}).map(({ rawCurrency, ...product }) => product);
+	}).map(({ rawCurrency, ...product }) => product).slice(0, limit);
 }
 
 export {
