@@ -1,7 +1,6 @@
 import {buyGiftCard, checkProducts} from "./giftCards.js";
 
 const productId = "SUCNT639A6H9";
-let card = await checkProducts(productId);
 
 async function testPurchase() {
 	const response = await buyGiftCard({
@@ -15,4 +14,14 @@ async function testPurchase() {
 	console.log(response);
 }
 
-testPurchase();
+async function testSearch() {
+	const options = {
+		currency: ["USD"],
+	}
+	const response = await checkProducts(options);
+
+	console.log(response);
+}
+
+await testPurchase();
+await testSearch();
