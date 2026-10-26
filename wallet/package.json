@@ -1,0 +1,15 @@
+{
+  "name": "egift-wallet",
+  "version": "1.0.0",
+  "description": "Standalone gift card wallet simulation (local only, no external services).",
+  "type": "module",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "node index.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
