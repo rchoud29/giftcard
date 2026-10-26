@@ -1,0 +1,652 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>eGift by Appyyo</title>
+<style>
+  /* Layout concept: centered single-column flow of full-bleed bands; hero + alternating feature rows with device mockups; wallet grid as the visual signature. */
+  :root {
+    --bg: #fbf7f3;
+    --surface: #ffffff;
+    --surface-2: #f4ece4;
+    --fg: #241a2e;
+    --muted: #6d6177;
+    --line: #e7dcd2;
+    --accent: #ff5d73;
+    --accent-2: #ffab4c;
+    --accent-ink: #b22947;
+    --plum: #2a1d3a;
+    --mint: #2bb79a;
+    --radius: 20px;
+    --radius-sm: 12px;
+    --shadow: 0 18px 50px -24px rgba(42,29,58,.4);
+    --shadow-soft: 0 10px 30px -18px rgba(42,29,58,.35);
+    --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+    --font-body: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --max: 1120px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #140d1d;
+      --surface: #1e1529;
+      --surface-2: #261a34;
+      --fg: #f3ecf6;
+      --muted: #ab9fba;
+      --line: #342842;
+      --accent: #ff6a7e;
+      --accent-2: #ffb65f;
+      --accent-ink: #ff92a3;
+      --plum: #0e0817;
+      --mint: #37c9aa;
+      --shadow: 0 18px 50px -24px rgba(0,0,0,.7);
+      --shadow-soft: 0 10px 30px -18px rgba(0,0,0,.6);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #140d1d;
+    --surface: #1e1529;
+    --surface-2: #261a34;
+    --fg: #f3ecf6;
+    --muted: #ab9fba;
+    --line: #342842;
+    --accent: #ff6a7e;
+    --accent-2: #ffb65f;
+    --accent-ink: #ff92a3;
+    --plum: #0e0817;
+    --mint: #37c9aa;
+    --shadow: 0 18px 50px -24px rgba(0,0,0,.7);
+    --shadow-soft: 0 10px 30px -18px rgba(0,0,0,.6);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px);
+    z-index: 60;
+    background: var(--surface);
+  }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.08; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  a { color: inherit; }
+  .wrap {
+    width: 100%;
+    max-width: var(--max);
+    margin-inline: auto;
+    padding-inline: max(20px, env(safe-area-inset-left, 0px)) max(20px, env(safe-area-inset-right, 0px));
+  }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: saturate(1.4) blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-in { display: flex; align-items: center; gap: 28px; padding-block: 14px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 600; font-size: 1.28rem; letter-spacing: -.01em; }
+  .logo {
+    width: 34px; height: 34px; border-radius: 10px; flex: none;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: grid; place-items: center; color: #fff; box-shadow: var(--shadow-soft);
+  }
+  .logo svg { width: 19px; height: 19px; }
+  .brand small { font-family: var(--font-body); font-weight: 500; font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); display: block; margin-top: -3px; }
+  .nav-links { display: flex; gap: 26px; margin-left: auto; font-size: .92rem; font-weight: 500; color: var(--muted); }
+  .nav-links a { text-decoration: none; }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-cta { display: flex; align-items: center; gap: 12px; }
+  .btn {
+    font-family: var(--font-body); font-weight: 600; font-size: .92rem;
+    border: none; cursor: pointer; border-radius: 999px; padding: 11px 20px;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; box-shadow: var(--shadow-soft); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .btn-ghost { background: transparent; color: var(--fg); }
+  .btn-ghost:hover { color: var(--accent-ink); }
+  .btn-dark { background: var(--plum); color: #fff; }
+  .btn-dark:hover { transform: translateY(-2px); }
+  @media (max-width: 760px) { .nav-links { display: none; } .nav-cta .btn-ghost { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; padding-top: 72px; padding-bottom: 40px; overflow: hidden; }
+  .hero::after {
+    content: ""; position: absolute; inset: -20% -30% auto; height: 520px; z-index: 0;
+    background: radial-gradient(60% 70% at 72% 20%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 70%),
+                radial-gradient(50% 60% at 15% 10%, color-mix(in srgb, var(--accent-2) 22%, transparent), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-ink); background: color-mix(in srgb, var(--accent) 14%, transparent); padding: 6px 13px; border-radius: 999px; }
+  .hero h1 { font-size: clamp(2.6rem, 6vw, 4.1rem); margin-top: 22px; letter-spacing: -.02em; }
+  .hero h1 em { font-style: italic; color: var(--accent-ink); }
+  .hero p.lede { font-size: 1.14rem; color: var(--muted); margin-top: 20px; max-width: 46ch; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+  .trust { display: flex; align-items: center; gap: 18px; margin-top: 30px; color: var(--muted); font-size: .86rem; flex-wrap: wrap; }
+  .avatars { display: flex; }
+  .avatars span { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--bg); margin-left: -9px; background: var(--surface-2); display: grid; place-items: center; font-size: .8rem; font-weight: 700; color: var(--accent-ink); }
+  .avatars span:first-child { margin-left: 0; }
+  .stars { color: var(--accent-2); letter-spacing: 2px; }
+
+  @media (max-width: 880px) { .hero-grid { grid-template-columns: 1fr; gap: 36px; } }
+
+  /* ---------- phone mockup ---------- */
+  .phone {
+    position: relative; width: 300px; max-width: 100%; margin-inline: auto;
+    aspect-ratio: 300 / 620; border-radius: 42px; padding: 11px;
+    background: linear-gradient(160deg, #3a2b4d, #1c1326);
+    box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,.08);
+  }
+  .phone::before { content: ""; position: absolute; top: 18px; left: 50%; transform: translateX(-50%); width: 92px; height: 20px; background: #140d1d; border-radius: 999px; z-index: 3; }
+  .screen { width: 100%; height: 100%; border-radius: 32px; overflow: hidden; background: var(--surface); position: relative; display: flex; flex-direction: column; }
+  .screen-top { padding: 30px 18px 12px; background: linear-gradient(150deg, var(--accent), var(--accent-2)); color: #fff; }
+  .screen-top .sgreet { font-size: .72rem; opacity: .9; letter-spacing: .03em; }
+  .screen-top .sbal { font-family: var(--font-display); font-size: 1.9rem; font-weight: 600; margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .screen-top .scap { font-size: .68rem; opacity: .85; margin-top: 2px; }
+  .screen-body { flex: 1; padding: 14px; overflow: hidden; display: flex; flex-direction: column; gap: 10px; background: var(--surface); }
+  .sec-label { font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .mini-card { border-radius: 14px; padding: 11px 12px; color: #fff; position: relative; overflow: hidden; box-shadow: var(--shadow-soft); }
+  .mini-card .brand-row { display: flex; justify-content: space-between; align-items: center; font-size: .82rem; font-weight: 700; }
+  .mini-card .amt { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; margin-top: 10px; font-variant-numeric: tabular-nums; }
+  .mini-card .chip { width: 24px; height: 17px; border-radius: 4px; background: rgba(255,255,255,.4); }
+  .mc-a { background: linear-gradient(135deg, #6a5cff, #9d6bff); }
+  .mc-b { background: linear-gradient(135deg, #1f9d8f, #37c9aa); }
+  .mc-c { background: linear-gradient(135deg, #ff7a59, #ffab4c); }
+  .screen-nav { display: flex; justify-content: space-around; padding: 11px 8px calc(13px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); background: var(--surface); }
+  .screen-nav i { width: 22px; height: 22px; border-radius: 7px; background: var(--surface-2); display: block; }
+  .screen-nav i.on { background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+
+  /* ---------- logos strip ---------- */
+  .strip { border-block: 1px solid var(--line); background: var(--surface); }
+  .strip-in { padding-block: 22px; display: flex; align-items: center; gap: 14px 40px; flex-wrap: wrap; justify-content: center; }
+  .strip-in span.t { font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .strip-in b { font-family: var(--font-display); font-size: 1.15rem; color: var(--muted); font-weight: 600; opacity: .8; }
+
+  /* ---------- section shell ---------- */
+  section.band { padding-block: 72px; }
+  .band-head { max-width: 640px; margin-inline: auto; text-align: center; margin-bottom: 48px; }
+  .band-head .eyebrow { margin-bottom: 16px; }
+  .band-head h2 { font-size: clamp(1.9rem, 4vw, 2.75rem); letter-spacing: -.015em; }
+  .band-head p { color: var(--muted); font-size: 1.06rem; margin-top: 14px; }
+
+  /* ---------- how it works ---------- */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: step; }
+  .step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; position: relative; }
+  .step .n { font-family: var(--font-display); font-size: 2.1rem; font-weight: 600; color: var(--accent); line-height: 1; }
+  .step h3 { font-size: 1.22rem; margin-top: 12px; }
+  .step p { color: var(--muted); font-size: .96rem; margin-top: 8px; }
+  @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+
+  /* ---------- feature rows ---------- */
+  .feature { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding-block: 44px; }
+  .feature.rev .ftext { order: 2; }
+  .feature .eyebrow { margin-bottom: 14px; }
+  .feature h2 { font-size: clamp(1.7rem, 3.4vw, 2.3rem); letter-spacing: -.01em; }
+  .feature p.desc { color: var(--muted); font-size: 1.04rem; margin-top: 14px; }
+  .feature ul { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 11px; }
+  .feature li { display: flex; gap: 11px; align-items: flex-start; font-size: .98rem; }
+  .feature li svg { flex: none; width: 20px; height: 20px; margin-top: 2px; color: var(--mint); }
+  @media (max-width: 880px) {
+    .feature, .feature.rev { grid-template-columns: 1fr; gap: 32px; }
+    .feature.rev .ftext { order: 0; }
+  }
+
+  /* ---------- mock panels inside features ---------- */
+  .mock {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow-soft); overflow: hidden;
+  }
+  .mock-bar { display: flex; align-items: center; gap: 7px; padding: 12px 14px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+  .mock-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+  .mock-bar i:nth-child(1){ background:#ff6058;} .mock-bar i:nth-child(2){ background:#ffbd2e;} .mock-bar i:nth-child(3){ background:#28c840;}
+  .mock-bar span { margin-left: 8px; font-size: .78rem; color: var(--muted); font-weight: 500; }
+  .mock-body { padding: 20px; }
+
+  /* group gifting pool */
+  .pool-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .pool-head .goal { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .pool-head .goal b { color: var(--muted); font-weight: 500; font-size: .9rem; }
+  .pool-head .pct { color: var(--mint); font-weight: 700; font-size: .9rem; }
+  .bar { height: 10px; border-radius: 999px; background: var(--surface-2); margin-top: 14px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 72%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+  .contribs { margin-top: 18px; display: grid; gap: 10px; }
+  .contrib { display: flex; align-items: center; gap: 11px; font-size: .9rem; }
+  .contrib .av { width: 30px; height: 30px; border-radius: 50%; flex: none; display: grid; place-items: center; font-weight: 700; font-size: .78rem; color: #fff; }
+  .contrib .nm { font-weight: 600; }
+  .contrib .vl { margin-left: auto; font-variant-numeric: tabular-nums; font-weight: 600; color: var(--muted); }
+
+  /* message composer */
+  .composer .to { font-size: .84rem; color: var(--muted); }
+  .composer .to b { color: var(--fg); }
+  .giftcard-prev { margin-top: 12px; border-radius: 16px; padding: 20px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; box-shadow: var(--shadow-soft); }
+  .giftcard-prev .occ { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; opacity: .9; }
+  .giftcard-prev .amt { font-family: var(--font-display); font-size: 2rem; font-weight: 600; margin-top: 4px; }
+  .giftcard-prev .msg { font-size: .9rem; margin-top: 10px; opacity: .96; font-style: italic; }
+  .msg-input { margin-top: 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 11px 13px; font-size: .9rem; color: var(--muted); background: var(--surface-2); }
+  .emoji-row { display: flex; gap: 8px; margin-top: 12px; }
+  .emoji-row b { width: 38px; height: 38px; border-radius: 10px; background: var(--surface-2); display: grid; place-items: center; font-size: 1.1rem; border: 1px solid var(--line); }
+  .emoji-row b.sel { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+
+  /* redemption options */
+  .redeem { display: grid; gap: 12px; }
+  .redeem-opt { display: flex; align-items: center; gap: 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px; transition: border-color .15s ease; }
+  .redeem-opt.sel { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 7%, transparent); }
+  .redeem-opt .ic { width: 42px; height: 42px; border-radius: 11px; flex: none; display: grid; place-items: center; background: var(--surface-2); color: var(--accent-ink); }
+  .redeem-opt .ic svg { width: 22px; height: 22px; }
+  .redeem-opt .rt { font-weight: 600; font-size: .98rem; }
+  .redeem-opt .rs { font-size: .82rem; color: var(--muted); }
+  .redeem-opt .rr { margin-left: auto; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--line); flex: none; }
+  .redeem-opt.sel .rr { border-color: var(--accent); background: radial-gradient(circle, var(--accent) 42%, transparent 46%); }
+
+  /* ---------- wallet grid signature ---------- */
+  .wallet-band { background: var(--plum); color: #fff; position: relative; overflow: hidden; }
+  .wallet-band::before { content:""; position:absolute; inset:-30% -10% auto; height: 400px; background: radial-gradient(50% 60% at 80% 0, color-mix(in srgb, var(--accent) 30%, transparent), transparent 70%); }
+  .wallet-band .band-head h2, .wallet-band .band-head p { color: #fff; }
+  .wallet-band .band-head p { opacity: .8; }
+  .wallet-band .eyebrow { background: rgba(255,255,255,.12); color: #fff; }
+  .wallet-grid { position: relative; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
+  .gcard { aspect-ratio: 1.6 / 1; border-radius: 16px; padding: 16px; color: #fff; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 14px 30px -18px rgba(0,0,0,.6); position: relative; overflow: hidden; }
+  .gcard .top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .gcard .nm { font-weight: 700; font-size: .98rem; }
+  .gcard .st { font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: rgba(255,255,255,.22); font-weight: 600; }
+  .gcard .bal { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .gcard .exp { font-size: .7rem; opacity: .85; }
+  .g1{background:linear-gradient(135deg,#6a5cff,#9d6bff);} .g2{background:linear-gradient(135deg,#1f9d8f,#37c9aa);}
+  .g3{background:linear-gradient(135deg,#ff7a59,#ffab4c);} .g4{background:linear-gradient(135deg,#e34b7e,#ff6a7e);}
+  .g5{background:linear-gradient(135deg,#3b7dd8,#59b6ff);} .g6{background:linear-gradient(135deg,#1c1326,#3a2b4d);}
+
+  /* ---------- stats ---------- */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .stat { text-align: center; padding: 10px; }
+  .stat .big { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 600; color: var(--accent-ink); line-height: 1; font-variant-numeric: tabular-nums; }
+  .stat .lbl { font-size: .86rem; color: var(--muted); margin-top: 8px; }
+  @media (max-width: 620px) { .stats { grid-template-columns: repeat(2, 1fr); gap: 26px; } }
+
+  /* ---------- platforms ---------- */
+  .plat { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+  .plat-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; text-align: center; }
+  .plat-card .pi { width: 52px; height: 52px; border-radius: 14px; margin: 0 auto 14px; display: grid; place-items: center; background: var(--surface-2); color: var(--accent-ink); }
+  .plat-card h3 { font-size: 1.1rem; }
+  .plat-card p { color: var(--muted); font-size: .92rem; margin-top: 7px; }
+  @media (max-width: 700px) { .plat { grid-template-columns: 1fr; } }
+
+  /* ---------- cta ---------- */
+  .final { text-align: center; }
+  .final-box {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff;
+    border-radius: 28px; padding: clamp(40px, 6vw, 68px) 28px; box-shadow: var(--shadow); position: relative; overflow: hidden;
+  }
+  .final-box h2 { font-size: clamp(2rem, 5vw, 3rem); color: #fff; }
+  .final-box p { margin-top: 14px; font-size: 1.1rem; opacity: .95; max-width: 44ch; margin-inline: auto; }
+  .final-box .btn-dark { margin-top: 28px; }
+
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--line); background: var(--surface); padding-block: 44px calc(44px + env(safe-area-inset-bottom, 0px)); margin-top: 20px; }
+  .foot-grid { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+  .foot-grid .fcol h4 { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; font-family: var(--font-body); font-weight: 700; }
+  .foot-grid .fcol a { display: block; text-decoration: none; color: var(--fg); font-size: .92rem; margin-bottom: 8px; opacity: .85; }
+  .foot-grid .fcol a:hover { color: var(--accent-ink); opacity: 1; }
+  .foot-bottom { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--muted); font-size: .84rem; }
+
+  .theme-toggle { background: var(--surface-2); border: 1px solid var(--line); color: var(--fg); width: 38px; height: 38px; border-radius: 10px; cursor: pointer; display: grid; place-items: center; }
+  .theme-toggle:hover { border-color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+
+<!-- ========== NAV ========== -->
+<nav class="nav">
+  <div class="wrap nav-in">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M20 12v7a1 1 0 01-1 1H5a1 1 0 01-1-1v-7M12 20V8M12 8H8.5a2.5 2.5 0 010-5C11 3 12 8 12 8zM12 8h3.5a2.5 2.5 0 000-5C13 3 12 8 12 8zM3 8h18v4H3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      </span>
+      <span>eGift<small>by appyyo</small></span>
+    </div>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#group">Group gifting</a>
+      <a href="#redeem">Redemption</a>
+      <a href="#wallet">Wallet</a>
+    </div>
+    <div class="nav-cta">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" id="themeIcon"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      </button>
+      <a href="#" class="btn btn-ghost">Sign in</a>
+      <a href="#get" class="btn btn-primary">Get started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">★ One wallet for every gift card</span>
+      <h1>Give any card.<br>Keep it all in <em>one place.</em></h1>
+      <p class="lede">eGift is the universal digital gift card platform. Send to any retailer, pool with friends, add a personal message, and let them redeem however they want — all from a single wallet.</p>
+      <div class="hero-actions">
+        <a href="#get" class="btn btn-primary">Send a gift
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#how" class="btn btn-ghost">See how it works</a>
+      </div>
+      <div class="trust">
+        <div class="avatars" aria-hidden="true">
+          <span>N</span><span>J</span><span>M</span><span>R</span><span>+</span>
+        </div>
+        <div>
+          <div class="stars">★★★★★</div>
+          <div>Loved by early gifters across 40+ brands</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- phone -->
+    <div class="phone" aria-label="eGift mobile app preview">
+      <div class="screen">
+        <div class="screen-top">
+          <div class="sgreet">Good afternoon, Nadia</div>
+          <div class="sbal">$485.00</div>
+          <div class="scap">Across 6 active cards</div>
+        </div>
+        <div class="screen-body">
+          <div class="sec-label">Your wallet</div>
+          <div class="mini-card mc-a">
+            <div class="brand-row"><span>Universal eGift</span><span class="chip"></span></div>
+            <div class="amt">$150.00</div>
+          </div>
+          <div class="mini-card mc-b">
+            <div class="brand-row"><span>Coffee &amp; Co.</span><span class="chip"></span></div>
+            <div class="amt">$45.00</div>
+          </div>
+          <div class="mini-card mc-c">
+            <div class="brand-row"><span>Birthday Pool 🎉</span><span class="chip"></span></div>
+            <div class="amt">$290.00</div>
+          </div>
+        </div>
+        <div class="screen-nav" aria-hidden="true">
+          <i class="on"></i><i></i><i></i><i></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ========== STRIP ========== -->
+<div class="strip">
+  <div class="wrap strip-in">
+    <span class="t">Redeemable at</span>
+    <b>Marketplace</b><b>Café Row</b><b>StreamBox</b><b>Homegoods</b><b>TechMart</b><b>Local+</b>
+  </div>
+</div>
+
+<!-- ========== HOW IT WORKS ========== -->
+<section class="band" id="how">
+  <div class="wrap">
+    <div class="band-head">
+      <span class="eyebrow">How it works</span>
+      <h2>Gifting in three taps</h2>
+      <p>No more hunting through emails for codes or juggling cards that only work at one store.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="n">01</div>
+        <h3>Pick an amount</h3>
+        <p>Choose a value and a universal card, or target a specific brand. Split the cost with a group if you like.</p>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <h3>Make it personal</h3>
+        <p>Add a message, choose an occasion theme, and schedule delivery for the exact moment it should land.</p>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <h3>They redeem, flexibly</h3>
+        <p>Recipients spend at any supported retailer, convert balances, or save the card in their eGift wallet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURE: GROUP GIFTING ========== -->
+<section class="band" id="group" style="padding-block:20px;">
+  <div class="wrap">
+    <div class="feature">
+      <div class="ftext">
+        <span class="eyebrow">Group gifting</span>
+        <h2>Everyone chips in. One card arrives.</h2>
+        <p class="desc">Start a gift pool, share a link, and let friends and family contribute any amount. eGift combines it into a single card the recipient actually wants.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Shareable contribution link — no app required to pitch in</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Live goal tracking so the group sees progress</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Every contributor's note is bundled into one card</li>
+        </ul>
+      </div>
+      <div class="mock">
+        <div class="mock-bar"><i></i><i></i><i></i><span>Birthday pool for Jordan</span></div>
+        <div class="mock-body">
+          <div class="pool-head">
+            <div class="goal">$290 <b>of $400 goal</b></div>
+            <div class="pct">72%</div>
+          </div>
+          <div class="bar"><i></i></div>
+          <div class="contribs">
+            <div class="contrib"><span class="av" style="background:#6a5cff">M</span><span class="nm">Maya R.</span><span class="vl">$100</span></div>
+            <div class="contrib"><span class="av" style="background:#37c9aa">T</span><span class="nm">Theo B.</span><span class="vl">$75</span></div>
+            <div class="contrib"><span class="av" style="background:#ffab4c">P</span><span class="nm">Priya K.</span><span class="vl">$65</span></div>
+            <div class="contrib"><span class="av" style="background:#ff6a7e">S</span><span class="nm">Sam &amp; Lee</span><span class="vl">$50</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURE: PERSONALIZED MESSAGE ========== -->
+<section class="band" style="padding-block:20px;">
+  <div class="wrap">
+    <div class="feature rev">
+      <div class="ftext">
+        <span class="eyebrow">Personalized messages</span>
+        <h2>A gift that sounds like you.</h2>
+        <p class="desc">Wrap any card in a message, an occasion theme, and a delivery time. The recipient opens something that feels made for them — not a forwarded code.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Themed designs for birthdays, thanks, holidays and more</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Schedule delivery to the minute</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Add a photo or short video note</li>
+        </ul>
+      </div>
+      <div class="mock">
+        <div class="mock-bar"><i></i><i></i><i></i><span>Compose gift</span></div>
+        <div class="mock-body composer">
+          <div class="to">To: <b>Jordan Avery</b> · delivers Sat 9:00 AM</div>
+          <div class="giftcard-prev">
+            <div class="occ">🎉 Happy Birthday</div>
+            <div class="amt">$400.00</div>
+            <div class="msg">"Pick something ridiculous. You earned it. — the whole crew"</div>
+          </div>
+          <div class="msg-input">Pick something ridiculous. You earned it. — the whole crew|</div>
+          <div class="emoji-row">
+            <b class="sel">🎉</b><b>🎂</b><b>🎁</b><b>❤️</b><b>✨</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURE: FLEXIBLE REDEMPTION ========== -->
+<section class="band" id="redeem" style="padding-block:20px 72px;">
+  <div class="wrap">
+    <div class="feature">
+      <div class="ftext">
+        <span class="eyebrow">Flexible redemption</span>
+        <h2>Spend it their way.</h2>
+        <p class="desc">A universal balance isn't locked to one store. Recipients choose where it goes, split it across brands, or keep it in their wallet for later.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Redeem at any supported retailer</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Split one balance across several brands</li>
+          <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Transfer or re-gift unused value</li>
+        </ul>
+      </div>
+      <div class="mock">
+        <div class="mock-bar"><i></i><i></i><i></i><span>Redeem $150.00</span></div>
+        <div class="mock-body">
+          <div class="redeem">
+            <div class="redeem-opt sel">
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9h18M3 9l2-5h14l2 5M3 9v10a1 1 0 001 1h16a1 1 0 001-1V9" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+              <div><div class="rt">Spend at a retailer</div><div class="rs">40+ brands available now</div></div>
+              <span class="rr"></span>
+            </div>
+            <div class="redeem-opt">
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M8 7h8M8 12h8M8 17h5M4 4h16v16H4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+              <div><div class="rt">Split across brands</div><div class="rs">Divide this balance any way</div></div>
+              <span class="rr"></span>
+            </div>
+            <div class="redeem-opt">
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16v12H4zM4 7l4-4h8l4 4M12 11v4M10 13h4" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+              <div><div class="rt">Re-gift to someone</div><div class="rs">Pass the balance along</div></div>
+              <span class="rr"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WALLET SIGNATURE ========== -->
+<section class="band wallet-band" id="wallet">
+  <div class="wrap">
+    <div class="band-head">
+      <span class="eyebrow">The wallet</span>
+      <h2>Every card. Every brand. Organized.</h2>
+      <p>No more digging through email. Balances, expirations and statuses live together in one tidy wallet.</p>
+    </div>
+    <div class="wallet-grid">
+      <div class="gcard g1"><div class="top"><span class="nm">Universal eGift</span><span class="st">Active</span></div><div><div class="bal">$150.00</div><div class="exp">No expiration</div></div></div>
+      <div class="gcard g2"><div class="top"><span class="nm">Coffee &amp; Co.</span><span class="st">Active</span></div><div><div class="bal">$45.00</div><div class="exp">Exp. Dec 2027</div></div></div>
+      <div class="gcard g3"><div class="top"><span class="nm">Homegoods</span><span class="st">Active</span></div><div><div class="bal">$80.00</div><div class="exp">Exp. Mar 2027</div></div></div>
+      <div class="gcard g4"><div class="top"><span class="nm">StreamBox</span><span class="st">Active</span></div><div><div class="bal">$60.00</div><div class="exp">No expiration</div></div></div>
+      <div class="gcard g5"><div class="top"><span class="nm">TechMart</span><span class="st">Active</span></div><div><div class="bal">$50.00</div><div class="exp">Exp. Aug 2027</div></div></div>
+      <div class="gcard g6"><div class="top"><span class="nm">Local+ Card</span><span class="st" style="background:rgba(255,255,255,.3)">Low</span></div><div><div class="bal">$5.00</div><div class="exp">Exp. Nov 2026</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STATS ========== -->
+<section class="band" style="padding-block:60px;">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><div class="big">40+</div><div class="lbl">Supported brands</div></div>
+      <div class="stat"><div class="big">1</div><div class="lbl">Unified wallet</div></div>
+      <div class="stat"><div class="big">$0</div><div class="lbl">Hidden fees</div></div>
+      <div class="stat"><div class="big">3</div><div class="lbl">Taps to send</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PLATFORMS ========== -->
+<section class="band" style="padding-block:20px 72px;">
+  <div class="wrap">
+    <div class="band-head">
+      <span class="eyebrow">Anywhere you are</span>
+      <h2>Web, iOS &amp; Android</h2>
+      <p>One account, synced across every device — a responsive web app and native-feeling mobile experiences.</p>
+    </div>
+    <div class="plat">
+      <div class="plat-card">
+        <div class="pi"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 5h18v11H3zM3 16l-1 3h20l-1-3M9 19h6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+        <h3>Web app</h3>
+        <p>Full gifting, pools and wallet management in any browser.</p>
+      </div>
+      <div class="plat-card">
+        <div class="pi"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M7 2h10v20H7zM11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+        <h3>iOS</h3>
+        <p>Apple Wallet-ready cards and instant push on delivery.</p>
+      </div>
+      <div class="plat-card">
+        <div class="pi"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M7 2h10v20H7zM11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+        <h3>Android</h3>
+        <p>Google Pay integration and scheduled gift reminders.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FINAL CTA ========== -->
+<section class="band final" id="get" style="padding-block:20px 80px;">
+  <div class="wrap">
+    <div class="final-box">
+      <h2>Give something they'll actually use.</h2>
+      <p>Start a gift, open a pool, or build your wallet in under a minute. No fees, no retailer lock-in.</p>
+      <a href="#" class="btn btn-dark">Send your first gift</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="fcol" style="max-width:240px;">
+        <div class="brand" style="margin-bottom:12px;">
+          <span class="logo" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M20 12v7a1 1 0 01-1 1H5a1 1 0 01-1-1v-7M12 20V8M12 8H8.5a2.5 2.5 0 010-5C11 3 12 8 12 8zM12 8h3.5a2.5 2.5 0 000-5C13 3 12 8 12 8zM3 8h18v4H3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          </span>
+          <span>eGift<small>by appyyo</small></span>
+        </div>
+        <p style="color:var(--muted); font-size:.9rem;">The universal digital gift card platform. Give, receive and manage every card in one place.</p>
+      </div>
+      <div class="fcol"><h4>Product</h4><a href="#how">How it works</a><a href="#group">Group gifting</a><a href="#redeem">Redemption</a><a href="#wallet">Wallet</a></div>
+      <div class="fcol"><h4>Company</h4><a href="#">About</a><a href="#">Brand partners</a><a href="#">Careers</a><a href="#">Press</a></div>
+      <div class="fcol"><h4>Support</h4><a href="#">Help center</a><a href="#">Contact</a><a href="#">Security</a><a href="#">Status</a></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Appyyo, Inc. All rights reserved.</span>
+      <span>Privacy · Terms · Cookies</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    var sun = '<path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5M12 8a4 4 0 100 8 4 4 0 000-8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>';
+    var moon = '<path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>';
+    function current() {
+      var set = root.getAttribute('data-theme');
+      if (set) return set;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function render() {
+      document.getElementById('themeIcon').innerHTML = current() === 'dark' ? sun : moon;
+    }
+    try { var saved = localStorage.getItem('egift-theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+    render();
+    btn.addEventListener('click', function () {
+      var next = current() === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('egift-theme', next); } catch (e) {}
+      render();
+    });
+  })();
+</script>
