@@ -1,4 +1,3 @@
-
 export function generateBarcode(elementId, barcodeValue) {
     if (typeof JsBarcode === "undefined") {
         console.error("JsBarcode library is not loaded.");

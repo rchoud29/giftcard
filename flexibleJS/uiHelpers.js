@@ -1,4 +1,3 @@
-
 //Copy code number to clipboard.
 export async function copyGiftCardCode(cardNumber) {
     try {

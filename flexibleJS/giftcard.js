@@ -1,4 +1,3 @@
-
 export const sampleGiftCard = {
     id: 1,
     merchant: "Demo Store",
