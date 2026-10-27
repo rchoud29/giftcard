@@ -15,6 +15,10 @@ This is the account and security foundation of the platform. It covers user stor
 
 The landing page's brand names, "40+ brands" and "$0 hidden fees" are placeholder copy from the design mock-up.
 
+## Credits
+
+The eGift design and landing page come from the UI built by **Amrit Sahai** (`egift.html` on the `UI` branch of `rchoud29/giftcard`). It was converted to React and connected to the account system here: its Sign in and Get started buttons open the real sign-in and sign-up pages, and the sign-in, sign-up, reset and account pages were restyled to match it.
+
 ## Running locally
 
 1. Start PostgreSQL. Either run `docker compose up -d` (this also starts Mailpit), or install Postgres 16 yourself and create a `giftcard` user and database. The default `DATABASE_URL` is `postgresql://giftcard:giftcard@localhost:5432/giftcard`.
