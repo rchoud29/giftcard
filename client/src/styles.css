@@ -1,0 +1,81 @@
+/* Auth + account pages, built on the eGift tokens in egift.css. */
+
+main.app-main { padding: 48px 16px 72px; display: flex; justify-content: center; position: relative; }
+main.app-main::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 420px; pointer-events: none;
+  background: radial-gradient(50% 70% at 80% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+              radial-gradient(45% 60% at 10% 0%, color-mix(in srgb, var(--accent-2) 16%, transparent), transparent 70%);
+}
+.stack { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; width: 100%; max-width: 600px; }
+
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  padding: 2rem;
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.card.wide { max-width: 600px; }
+.card h1 { font-size: 2rem; letter-spacing: -.015em; }
+.card h2 { font-size: 1.4rem; }
+.card a { color: var(--accent-ink); font-weight: 500; }
+
+.row { display: flex; gap: 0.75rem; }
+.row > * { flex: 1; min-width: 0; }
+
+.field { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.88rem; font-weight: 600; }
+.field input {
+  font: inherit;
+  font-weight: 400;
+  color: var(--fg);
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+.field input:focus { outline: 2px solid var(--accent); outline-offset: -1px; background: var(--surface); }
+.field input[aria-invalid] { border-color: var(--error); }
+.field input:disabled { opacity: .65; }
+
+form button:not(.link) {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.8rem 1.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+form button:not(.link):hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow); }
+form button:disabled { opacity: 0.6; cursor: default; }
+button.link { font: inherit; background: none; border: 0; color: var(--accent-ink); padding: 0; font-weight: 500; text-decoration: underline; cursor: pointer; }
+
+.alert { padding: 0.75rem 1rem; border-radius: var(--radius-sm); font-size: 0.9rem; }
+.alert-error { background: var(--error-bg); color: var(--error); }
+.alert-success { background: var(--success-bg); color: var(--success); }
+.alert-info { background: var(--info-bg); }
+.stack > form:not(.card) { width: 100%; }
+
+.error { color: var(--error); font-weight: 400; }
+.muted { color: var(--muted); font-size: 0.9rem; margin: 0; }
+.center { text-align: center; }
+
+.rules { list-style: none; margin: -0.5rem 0 0; padding: 0; font-size: 0.85rem; color: var(--muted); }
+.rules li.ok { color: var(--success); }
+
+.activity { list-style: none; margin: 0; padding: 0; }
+.activity li { display: flex; flex-direction: column; padding: 0.7rem 0; border-top: 1px solid var(--line); }
+
+@media (max-width: 480px) {
+  .row { flex-direction: column; }
+  .card { padding: 1.5rem; }
+}
