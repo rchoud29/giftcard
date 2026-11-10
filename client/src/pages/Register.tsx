@@ -23,6 +23,9 @@ export function Register() {
         <h1>Check your inbox</h1>
         <Alert kind="success">{done}</Alert>
         <p className="muted">The confirmation link expires in 24 hours.</p>
+        <p className="muted">
+          Can't find it? Check your <strong>spam or junk</strong> folder, and mark it <strong>Not spam</strong> so future emails reach your inbox.
+        </p>
         <Link to="/login">Go to sign in</Link>
       </div>
     );

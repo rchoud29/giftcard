@@ -40,10 +40,11 @@ export function Login() {
             resent
           ) : (
             <>
-              Didn't get the email?{' '}
+              Didn't get the email? Check your <strong>spam or junk</strong> folder, or{' '}
               <button type="button" className="link" disabled={resendForm.submitting} onClick={resend}>
-                Resend confirmation email
+                resend the confirmation email
               </button>
+              .
             </>
           )}
           {resendForm.error && <div className="error">{resendForm.error}</div>}

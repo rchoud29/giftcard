@@ -8,7 +8,9 @@ const NOT_YOU = `If this wasn't you, reset your password now: ${config.APP_URL}/
 export function verifyEmail(firstName: string, link: string): Template {
   return {
     subject: 'Confirm your email address',
-    text: `Hi ${firstName},\n\nConfirm your email address to start managing your gift cards:\n${link}\n\nThis link expires in 24 hours.${SIGNATURE}`,
+    text: `Hi ${firstName},\n\nConfirm your email address to start managing your gift cards:\n${link}\n\nThis link expires in 24 hours.
+
+You're getting this because this address was used to sign up. If this email landed in your spam or junk folder, please mark it "Not spam" so future emails reach your inbox.${SIGNATURE}`,
   };
 }
 
